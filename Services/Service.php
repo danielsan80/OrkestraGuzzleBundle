@@ -288,8 +288,14 @@ abstract class Service
         $client = $this->getCommandClient($name);
 
         $command = $client->getCommand($name, $params);
+        
+        $command->set('command.response_processing', 'raw');
 
         $response = $client->execute($command);
+        
+        //if ($response instanceof \SimpleXMLElement){
+        //    $response = $response->asXML();
+        //}
 
         if (is_object($response)) {
             throw new \Exception('Unexpected content: '.(string) $response);
